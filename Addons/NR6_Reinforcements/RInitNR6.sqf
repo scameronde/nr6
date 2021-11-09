@@ -14,11 +14,12 @@ SpawnRGroup = {
 
 	_SpawnPos = _this select 0;
 	_SpawnRadius = _this select 1;
-	_side = _this select 2;
-	_Pool = _this select 3;
-	_Leaders = _this select 4;
-    _RejoinPoint = _this select 5;
-    _ExtraArgs = _this select 6;
+    _SpawnMarker = _this select 2;
+	_side = _this select 3;
+	_Pool = _this select 4;
+	_Leaders = _this select 5;
+    _RejoinPoint = _this select 6;
+    _ExtraArgs = _this select 7;
     _SelGroup =  selectRandom _Pool;
     _selectedPos = selectRandom _SpawnPos;
 
@@ -33,7 +34,13 @@ SpawnRGroup = {
         };
 
         _grp = createGroup _side;
-        _selectedPos = ([_selectedPos,0,_SpawnRadius,10] call BIS_fnc_findSafePos);
+        if (_SpawnMarker == "") then {
+            _selectedPos = ([_selectedPos,0,_SpawnRadius,10] call BIS_fnc_findSafePos);
+        } else {
+            _selectedPos = [_SpawnMarker] call CBA_fnc_randPosArea; 
+            _selectedPos = [_selectedPos, 0, 20, 10] call BIS_fnc_findSafePos; 
+        };
+
         {
             _class = _x select 0;
             if (_class isKindOf "Man") then {

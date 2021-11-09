@@ -6,7 +6,7 @@
 
 private 
     [
-    "_side","_logic","_playerRange","_Commanders","_rStrgt","_SpawnPos","_StartForces","_sidetick","_faction","_CurrentForces","_Pool","_Threshold","_SpawnRadius","_Leaders","_SpawnRGroup","_CTR","_ObjSource","_CanSpawn","_RejoinPoint","_SpawnMode"
+    "_side","_logic","_playerRange","_Commanders","_rStrgt","_SpawnPos","_SpawnMarker","_StartForces","_sidetick","_faction","_CurrentForces","_Pool","_Threshold","_SpawnRadius","_Leaders","_SpawnRGroup","_CTR","_ObjSource","_CanSpawn","_RejoinPoint","_SpawnMode"
     ];
 
 _logic = _this select 0;
@@ -14,13 +14,20 @@ _logic = _this select 0;
 _Commanders = [];
 
 {
-	if ((typeOf _x) == "NR6_HAL_Leader_Module") then {waitUntil {sleep 0.5; (not (isNil (_x getvariable "LeaderType")))}; _Commanders pushback (call compile (_x getvariable "LeaderType"))};
+	if ((typeOf _x) == "NR6_HAL_Leader_Module") then {
+        waitUntil {
+            sleep 0.5; 
+            (not (isNil (_x getvariable "LeaderType")))
+        }; 
+        _Commanders pushback (call compile (_x getvariable "LeaderType"))
+    };
 } foreach (synchronizedObjects _logic);
 
 _side = call compile (_logic getvariable "_side");
 _rStrgt = _logic getvariable "_rStrgt";
 _SpawnPos =  [getpos _logic];
 _SpawnRadius = _logic getvariable "_SpawnRadius";
+_SpawnMarker = _logic getVariable "_SpawnMarker";
 _sidetick = _logic getvariable "_sidetick";
 _faction = _logic getvariable "_faction";
 _Threshold = _logic getvariable "_Threshold";
@@ -35,6 +42,7 @@ if ((typeOf _logic) == "NR6_Spawn_Module") then {_SpawnMode = true};
 _ThresholdDecay = _logic getvariable "_TDecay";
 if (isNil "_ThresholdDecay") then {_ThresholdDecay = -1};
 if ((_ThresholdDecay == -1) and not (_SpawnMode)) then  {_ThresholdDecay = (1/_sidetick)};
+if not (_SpawnMarker == "") then { _SpawnMarker setMarkerAlpha 0; };
 
 
 
@@ -728,7 +736,7 @@ if (_SpawnMode) exitwith {
 
         waitUntil {sleep 1; not ({_x distance (_SpawnPos select 0) < _playerRange} count allplayers > 0)};
         
-        [_SpawnPos,_SpawnRadius,_side,_Pool,_Leaders,nil,(_logic getVariable ["_ExtraArgs",""])] call SpawnRGroup;
+        [_SpawnPos,_SpawnRadius,_SpawnMarker,_side,_Pool,_Leaders,nil,(_logic getVariable ["_ExtraArgs",""])] call SpawnRGroup;
 
         };
         
@@ -762,9 +770,9 @@ while {true} do
             if (_sidetick > 0) then {
 
                 if (isNil "_RejoinPoint") then {
-                    [_SpawnPos,_SpawnRadius,_side,_Pool,_Leaders,nil,(_logic getVariable ["_ExtraArgs",""])] call SpawnRGroup;
+                    [_SpawnPos,_SpawnRadius,_SpawnMarker,_side,_Pool,_Leaders,nil,(_logic getVariable ["_ExtraArgs",""])] call SpawnRGroup;
                 } else {
-                    [_SpawnPos,_SpawnRadius,_side,_Pool,_Leaders,_RejoinPoint,(_logic getVariable ["_ExtraArgs",""])] call SpawnRGroup;
+                    [_SpawnPos,_SpawnRadius,_SpawnMarker,_side,_Pool,_Leaders,_RejoinPoint,(_logic getVariable ["_ExtraArgs",""])] call SpawnRGroup;
                 };
                 _sidetick = (_sidetick - 1);
                 _logic setvariable ["_sidetick",_sidetick];

@@ -104,6 +104,13 @@ class CfgVehicles
 				typeName="NUMBER";
 				defaultValue = "300";
 			};
+			class _SpawnMarker
+			{
+				displayName="Spawn Area";
+				description="The variable name of a marker that represents the area for spawning groups. If set, the spawn radius is ignored";
+				typeName="STRING";
+				defaultValue = "";
+			};
 
 			class _sidetick
 			{
@@ -243,6 +250,14 @@ class CfgVehicles
 				typeName="NUMBER";
 				defaultValue = "300";
 			};
+			class _SpawnMarker
+			{
+				displayName="Spawn Area";
+				description="The variable name of a marker that represents the area for spawning groups. If set, the spawn radius is ignored";
+				typeName="STRING";
+				defaultValue = "";
+			};
+
 			class _faction
 			{
 				displayName="Faction";
