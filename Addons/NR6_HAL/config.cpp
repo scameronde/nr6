@@ -1717,10 +1717,47 @@ class CfgVehicles
 		};
 	};
 
-	class NR6_HAL_Leader_Exclude_Module: Module_F
+	class NR6_HAL_Leader_ExcludeG_Module: Module_F
 	{
 		scope=2;
-		displayName="Exclude Squads";
+		displayName="Exclude Squads as Group";
+		author="NinjaRider600";
+		vehicleClass="Modules";
+		category="NR6_HAL_LEADER_MODULES";
+		function="NR6_fnc_HALExcludeG";
+		icon = "\NR6_HAL\icons\HAL_COEXCL_PIN.paa";
+		functionPriority=2;
+		isGlobal=0;
+		isTriggerActivated=0;
+		isDisposable=1;
+		is3DEN=0;
+		class Arguments: ArgumentsBaseUnits
+		{
+		};
+		class ModuleDescription: ModuleDescription
+		{
+			description="Synchronized squad members will have their squad added to the list of non-controlled squads for the synchronized commander module";
+			sync[]=
+			{
+				"LocationArea_F"
+			};
+			class LocationArea_F
+			{
+				position=0;
+				optional=0;
+				duplicate=1;
+				synced[]=
+				{
+					"Anything"
+				};
+			};
+		};
+	};
+
+class NR6_HAL_Leader_Exclude_Module: Module_F
+	{
+		scope=2;
+		displayName="Exclude Squads by Leader";
 		author="NinjaRider600";
 		vehicleClass="Modules";
 		category="NR6_HAL_LEADER_MODULES";
@@ -1736,7 +1773,7 @@ class CfgVehicles
 		};
 		class ModuleDescription: ModuleDescription
 		{
-			description="Synchronized squad members will have their squad added to the list of non-controlled squads for the synchronized commander module";
+			description="Synchronized squad leaders will have their squad added to the list of non-controlled squads for the synchronized commander module";
 			sync[]=
 			{
 				"LocationArea_F"
@@ -2897,6 +2934,11 @@ class CfgFunctions
 			{
 				description="";
 				file="\NR6_HAL\Modules\BBSettings.sqf";
+			};
+			class HALExcludeG
+			{
+				description="";
+				file="\NR6_HAL\Modules\ExcludeG.sqf";
 			};
 			class HALExclude
 			{

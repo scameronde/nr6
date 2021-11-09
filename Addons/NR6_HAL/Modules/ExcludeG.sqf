@@ -22,15 +22,15 @@ _Commanders = [];
 	waitUntil {sleep 0.5; (not (isNil _Leader))};
 	_Leader = call compile _Leader;
 
-	if (call compile ("isNil " + "'"  + _prefix + "Excluded" + "'" )) then {
+	if (call compile ("isNil " + "'"  + _prefix + "ExcludedG" + "'" )) then {
 	
-		call compile (_prefix + "Excluded" + " = " + "[]");
+		call compile (_prefix + "ExcludedG" + " = " + "[]");
 		
 	};
 
 	{
 		if not ((typeOf _x) == "NR6_HAL_Leader_Module") then {
-			_x call compile (_prefix + "Excluded" + " pushback " + "_this");
+			_x call compile (_prefix + "ExcludedG" + " pushback " + "(group _this)");
 		};
 	} foreach (synchronizedObjects _logic);
 
