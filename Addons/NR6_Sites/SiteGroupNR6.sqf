@@ -4,7 +4,7 @@
 
 private 
     [
-    "_grp","_logic","_Commanders","_SpawnPos","_SpawnRadius","_Pool","_GrpQuantity","_Leaders","_i","_Side","_SpawnRGroup","_PatrolPercent","_MinBuilding"
+    "_grp","_logic","_Commanders","_SpawnPos","_SpawnRadius","_SpawnMarker","_Pool","_GrpQuantity","_Leaders","_i","_Side","_SpawnRGroup","_PatrolPercent","_MinBuilding"
     ];
 
 _logic = _this select 0;
@@ -17,12 +17,14 @@ _Commanders = [];
 
 _SpawnPos = getpos _logic;
 _SpawnRadius = _logic getvariable "_SpawnRadius";
+_SpawnMarker = _logic getVariable "_SpawnMarker";
 _GrpQuantity = _logic getvariable "_GrpQuantity";
 _PatrolPercent = _logic getvariable "_PatrolPercent";
 _MinBuilding = _logic getvariable "_MinBuilding";
 _Side = call compile (_logic getVariable "_side");
 _Pool = call compile (_logic getvariable "_Pool");
 _Leaders = _Commanders;
+if not (_SpawnMarker == "") then { _SpawnMarker setMarkerAlpha 0; };
 
 
 if (isNil ("LeaderHQ")) then {LeaderHQ = objNull};
@@ -45,5 +47,5 @@ if (isNil ("RydHQH_ExcludedG")) then {RydHQH_ExcludedG = []};
 
 for "_x" from 1 to _GrpQuantity do
 {
-  [_SpawnPos,_SpawnRadius,_Side,_Pool,_SpawnRadius,_MinBuilding,_PatrolPercent,_Leaders] call SpawnRGroupS;
+  [_SpawnPos,_SpawnRadius,_SpawnMarker,_Side,_Pool,_SpawnRadius,_MinBuilding,_PatrolPercent,_Leaders] call SpawnRGroupS;
 };

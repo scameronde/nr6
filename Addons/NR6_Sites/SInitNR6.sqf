@@ -18,16 +18,17 @@ if (isNil ("RydHQH_NoDef")) then {RydHQH_NoDef = []};
 
 SpawnRGroupS = {
 
-    private ["_grp","_SelGroup","_class","_vharr","_selectedPos","_crewGear","_SpawnRadius","_Side","_Pool","_SpawnRadius","_MinBuilding","_PatrolPercent","_Leaders"];
+    private ["_grp","_SelGroup","_class","_vharr","_selectedPos","_crewGear","_SpawnRadius","_SpawnMarker","_Side","_Pool","_SpawnRadius","_MinBuilding","_PatrolPercent","_Leaders"];
 
     _selectedPos = _this select 0;
     _SpawnRadius = _this select 1;
-    _Side = _this select 2;
-    _Pool = _this select 3;
-    _SpawnRadius = _this select 4;
-    _MinBuilding = _this select 5;
-    _PatrolPercent = _this select 6;
-    _Leaders = _this select 7; 
+    _SpawnMarker = _this select 2;
+    _Side = _this select 3;
+    _Pool = _this select 4;
+    _SpawnRadius = _this select 5;
+    _MinBuilding = _this select 6;
+    _PatrolPercent = _this select 7;
+    _Leaders = _this select 8; 
     _SelGroup = selectRandom _Pool;
 
     _grp = grpNull;
@@ -41,7 +42,13 @@ SpawnRGroupS = {
         };
 
         _grp = createGroup _side;
-        _selectedPos = ([_selectedPos,0,_SpawnRadius,10] call BIS_fnc_findSafePos);
+        if (_SpawnMarker == "") then {
+            _selectedPos = ([_selectedPos,0,_SpawnRadius,10] call BIS_fnc_findSafePos);
+        } else {
+            _selectedPos = [_SpawnMarker] call CBA_fnc_randPosArea; 
+            _selectedPos = [_selectedPos, 0, 20, 10] call BIS_fnc_findSafePos; 
+        };
+
         {
             _class = _x select 0;
             if (_class isKindOf "Man") then {
@@ -67,7 +74,7 @@ SpawnRGroupS = {
     _grp setVariable ["Unable",true];
     _grp setVariable ["Busy" + (str _grp),true];
     _grp setVariable ["Garrisoned" + (str _grp),true];
-    [_grp,_SpawnPos,_SpawnRadius,_MinBuilding,_PatrolPercent] remoteExecCall ["NR6_fnc_CBA_Defend",(leader _grp)];
+    [_grp,_SpawnPos,_SpawnRadius,_SpawnMarker,_MinBuilding,_PatrolPercent] remoteExecCall ["NR6_fnc_CBA_Defend",(leader _grp)];
 
     {        
     if (isNull _x) then {} else 

@@ -12,6 +12,7 @@ Parameters:
     _group      - the group <GROUP, OBJECT>
     _position   - centre of area to defend <ARRAY, OBJECT, LOCATION, GROUP> (Default: _group)
     _radius     - radius of area to defend <NUMBER> (Default: 50)
+    _marker     - optional marker that should be taken into account instead of _position and _radius
     _threshold  - minimum building positions required to be considered for garrison <NUMBER> (Default: 3)
     _patrol     - chance for each unit to patrol instead of garrison, true for default, false for 0% <NUMBER, BOOLEAN> (Default: 0.1)
     _hold       - chance for each unit to hold their garrison in combat, true for 100%, false for 0% <NUMBER, BOOLEAN> (Default: 0)
@@ -31,6 +32,7 @@ params [
     ["_group", grpNull, [grpNull, objNull]],
     ["_position", [], [[], objNull, grpNull, locationNull], 3],
     ["_radius", 50, [0]],
+    ["_marker", "", [""]],
     ["_threshold", 3, [0]],
     ["_patrol", 0.1, [true, 0]],
     ["_hold", 0, [true, 0]]
@@ -47,6 +49,36 @@ if !(local _group) exitWith {}; // Don't create waypoints on each machine
 _position = [_position, _group] select (_position isEqualTo []);
 _position = _position call CBA_fnc_getPos;
 
+if not (_marker == "") then 
+{
+    // recalculate _position and _radius
+    private _markerPos = markerPos _marker;
+    private _markerSize = markerSize _marker;
+    private _markerShape = markerShape _marker;
+    private _markerRadius;
+    switch (_markerShape) do
+    {
+        case "RECTANGLE": {
+            private _a = _markerPos select 0;
+            private _b = _markerPos select 1;
+            _markerRadius = sqrt ((_a*_a) + (_b*_b));
+            _position = _markerPos;
+            _radius = _markerRadius;
+        };
+        case "ELLIPSE": {
+            private _a = _markerPos select 0;
+            private _b = _markerPos select 1;
+            _markerRadius = _a max _b;
+            _position = _markerPos;
+            _radius = _markerRadius;
+        };
+        default: {
+            // do not use that marker
+            _marker = "";
+        };
+    };
+};
+
 if (_patrol isEqualType true) then {
     _patrol = [0, 0.1] select _patrol;
 };
@@ -59,7 +91,9 @@ if (_hold isEqualType true) then {
 [_group] call CBA_fnc_clearWaypoints;
 
 private _statics = _position nearObjects ["StaticWeapon", _radius];
+if not (_marker == "") then { _statics = _statics inAreaArray _marker; };
 private _buildings = _position nearObjects ["Building", _radius];
+if not (_marker == "") then { _building = _buildings inAreaArray _marker; };
 
 private _BclassesOP = [
 

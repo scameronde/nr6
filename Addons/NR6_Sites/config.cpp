@@ -106,6 +106,14 @@ class CfgVehicles
 				defaultValue = "150";
 			};
 
+			class _SpawnMarker
+			{
+				displayName="Spawn Area";
+				description="The variable name of a marker that represents the area for spawning groups. If set, the spawn radius is ignored";
+				typeName="STRING";
+				defaultValue = "";
+			};
+
 			class _PatrolPercent
 			{
 				displayName="Chance Of Partol";
@@ -390,6 +398,14 @@ class CfgVehicles
 				description="Module will attempt to spawn camps randomly within this radius from the module.";
 				typeName="NUMBER";
 				defaultValue = "1500";
+			};
+
+			class _SpawnMarker
+			{
+				displayName="Spawn Area";
+				description="The variable name of a marker that represents the area for spawning camps. If set, the spawn radius is ignored";
+				typeName="STRING";
+				defaultValue = "";
 			};
 
 			class _CampNumber

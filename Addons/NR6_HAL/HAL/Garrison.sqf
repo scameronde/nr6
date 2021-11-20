@@ -275,7 +275,7 @@ for [{_a = 0},{_a < (count _Garrison)},{_a = _a + 1}] do
 
 		_task = [(leader _unitG),["Setup Garrison", "Setup a garrison and defend the area.", ""],(getPosATL (leader _unitG)),"defend"] call RYD_AddTask;
 
-		[_unitG,_pos,150,1,0.5,0,false] remoteExecCall ["NR6_fnc_CBA_Defend",(leader _unitG)];
+		[_unitG,_pos,150,"",1,0.5,0,false] remoteExecCall ["NR6_fnc_CBA_Defend",(leader _unitG)];
 	
 		}
 	};
