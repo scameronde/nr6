@@ -72,7 +72,7 @@ if not (_marker == "") then
             _position = _markerPos;
             _radius = _markerRadius;
         };
-        default: {
+        default {
             // do not use that marker
             _marker = "";
         };
