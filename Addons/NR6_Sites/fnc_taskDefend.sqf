@@ -93,7 +93,7 @@ if (_hold isEqualType true) then {
 private _statics = _position nearObjects ["StaticWeapon", _radius];
 if not (_marker == "") then { _statics = _statics inAreaArray _marker; };
 private _buildings = _position nearObjects ["Building", _radius];
-if not (_marker == "") then { _building = _buildings inAreaArray _marker; };
+if not (_marker == "") then { _buildings = _buildings inAreaArray _marker; };
 
 private _BclassesOP = [
 
