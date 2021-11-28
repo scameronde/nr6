@@ -10,7 +10,7 @@ if (isNil ("RydHQH_Included")) then {RydHQH_Included = []};
 
 SpawnRGroup = {
 
-    private ["_grp","_vharr","_class","_crewGear","_unit","_SelGroup","_grpi","_selectedPos","_SpawnPos","_SpawnRadius","_side","_Pool","_Leaders","_RejoinPoint","_sentence","_ExtraArgs"];
+    private ["_grp","_vharr","_class","_crewGear","_unit","_SelGroup","_grpi","_selectedPos","_SpawnPos","_SpawnRadius","_SpawnMarker","_side","_Pool","_Leaders","_RejoinPoint","_sentence","_ExtraArgs"];
 
 	_SpawnPos = _this select 0;
 	_SpawnRadius = _this select 1;
