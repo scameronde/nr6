@@ -506,6 +506,18 @@ class CfgFunctions
 				description="Sites Defend from CBA";
 				file="\NR6_Sites\fnc_taskDefend.sqf";
 			};
+		
+			class CBA_Patrol
+			{
+				description="Sites Patrol from CBA";
+				file="\NR6_Sites\fnc_taskPatrol.sqf";
+			};
+		
+			class CBA_AddWaypoint
+			{
+				description="Add Waypoint from CBA";
+				file="\NR6_Sites\fnc_addWaypoint.sqf";
+			};
 		};	
 	};
 };

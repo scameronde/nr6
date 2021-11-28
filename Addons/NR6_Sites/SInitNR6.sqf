@@ -64,13 +64,11 @@ SpawnRGroupS = {
         } foreach _SelGroup;
 
     } else {
-
-        _grp = [([_selectedPos,0,_SpawnRadius,10] call BIS_fnc_findSafePos),_side,_SelGroup] call BIS_fnc_spawnGroup;
-
+        _grp = [([_selectedPos,0,75,10] call BIS_fnc_findSafePos),_side,_SelGroup] call BIS_fnc_spawnGroup;
     }; 
     
     _grp deleteGroupWhenEmpty true;
-//    _grp setVariable ["zbe_cacheDisabled",true];
+    //    _grp setVariable ["zbe_cacheDisabled",true];
     _grp setVariable ["Unable",true];
     _grp setVariable ["Busy" + (str _grp),true];
     _grp setVariable ["Garrisoned" + (str _grp),true];

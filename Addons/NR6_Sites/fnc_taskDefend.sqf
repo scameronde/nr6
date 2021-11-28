@@ -40,7 +40,7 @@ params [
 
 private _New = true;
 
-if ((count _this) >= 7) then {_New = (_this select 6)};
+if ((count _this) >= 8) then {_New = (_this select 7)};
 
 // Input validation stuff here
 _group = _group call CBA_fnc_getGroup;
@@ -59,15 +59,15 @@ if not (_marker == "") then
     switch (_markerShape) do
     {
         case "RECTANGLE": {
-            private _a = _markerPos select 0;
-            private _b = _markerPos select 1;
+            private _a = _markerSize select 0;
+            private _b = _markerSize select 1;
             _markerRadius = sqrt ((_a*_a) + (_b*_b));
             _position = _markerPos;
             _radius = _markerRadius;
         };
         case "ELLIPSE": {
-            private _a = _markerPos select 0;
-            private _b = _markerPos select 1;
+            private _a = _markerSize select 0;
+            private _b = _markerSize select 1;
             _markerRadius = _a max _b;
             _position = _markerPos;
             _radius = _markerRadius;
@@ -257,4 +257,4 @@ if (_patrol > 0 && {count _units > 1}) then {
 } forEach _units;
 
 // Unassigned (or combat reacted) units will patrol
-[_group, _position, _radius, 5, "sad", "safe", "red", "limited"] call CBA_fnc_taskPatrol;
+[_group, _position, _radius, _marker, 5, "sad", "safe", "red", "limited"] call NR6_fnc_CBA_Patrol;
